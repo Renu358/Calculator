@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Calculator</title>
+  <style>
+    body {
+      background-color: #87AFC7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      width: 350px;
+      background-color: #E0E9F1;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .display {
+      width: 100%;
+      background-color: #CFE5F5;
+      border: none;
+      border-radius: 12px;
+      height: 60px;
+      font-size: 1.5rem;
+      text-align: right;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      height: 60px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      background-color: #A3C9D9;
+      color: #000;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #8EB3C1;
+    }
+
+    .operator {
+      background-color: #FFC857;
+    }
+
+    .operator:hover {
+      background-color: #E6A740;
+    }
+
+    .special {
+      background-color: #FF6F61;
+      color: white;
+    }
+
+    .special:hover {
+      background-color: #E65A50;
+    }
+
+    .equal {
+      background-color: #4CAF50;
+      color: white;
+      grid-column: span 4; /* Increase button length across 4 columns */
+    }
+
+    .equal:hover {
+      background-color: #45A049;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" class="display" id="display" disabled />
+    <div class="buttons">
+      <button onclick="clearDisplay()" class="special">C</button>
+      <button onclick="deleteLast()">del</button>
+      <button onclick="appendOperator('(')">(</button>
+      <button onclick="appendOperator(')')">)</button>
+      <button onclick="appendNumber('7')">7</button>
+      <button onclick="appendNumber('8')">8</button>
+      <button onclick="appendNumber('9')">9</button>
+      <button class="operator" onclick="appendOperator('/')">÷</button>
+      <button onclick="appendNumber('4')">4</button>
+      <button onclick="appendNumber('5')">5</button>
+      <button onclick="appendNumber('6')">6</button>
+      <button class="operator" onclick="appendOperator('*')">×</button>
+      <button onclick="appendNumber('1')">1</button>
+      <button onclick="appendNumber('2')">2</button>
+      <button onclick="appendNumber('3')">3</button>
+      <button class="operator" onclick="appendOperator('-')">−</button>
+      <button onclick="appendNumber('0')">0</button>
+      <button onclick="appendOperator('.')">.</button>
+      <button onclick="calculateSquareRoot()">√</button>
+      <button class="operator" onclick="appendOperator('%')">%</button>
+      <button class="equal" onclick="calculateResult()">Enter</button> <!-- Extended Enter Button -->
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function deleteLast() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function appendNumber(number) {
+      display.value += number;
+    }
+
+    function appendOperator(operator) {
+      display.value += operator;
+    }
+
+    function calculateSquareRoot() {
+      display.value = Math.sqrt(eval(display.value));
+    }
+
+    function calculateResult() {
+      try {
+        display.value = eval(display.value.replace('×', '*').replace('÷', '/'));
+      } catch {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>
